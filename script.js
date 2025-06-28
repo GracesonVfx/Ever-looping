@@ -35,3 +35,37 @@ Shery.imageEffect("#back", {
   },
   gooey: true,
 });
+
+var elem = document.querySelectorAll(".elem");
+elem.forEach(function (elem) {
+  var h1s = elem.querySelectorAll("h1");
+  var main = document.querySelector("#main");
+  var index = 0;
+  var animating = false;
+
+  main.addEventListener("click", function () {
+    if (!animating) {
+      animating = true;
+      gsap.to(h1s[index], {
+        top: "-=100%",
+        duration: 0.5,
+        ease: "power2.inOut",
+        onComplete: function () {
+          // Move the current h1 back to top: 100% after animation
+          gsap.set(this._targets[0], {
+            top: "100%",
+          });
+          animating = false;
+        },
+      });
+
+      index == h1s.length - 1 ? (index = 0) : index++;
+
+      gsap.to(h1s[index], {
+        top: "0%",
+        duration: 0.5,
+        ease: "power2.inOut",
+      });
+    }
+  });
+});
